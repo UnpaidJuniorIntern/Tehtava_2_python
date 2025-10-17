@@ -1,5 +1,5 @@
 from flask import Response, jsonify, request
-import models
+from repositories.products_sqlite_repository import ProductsSQLiteRepository
 
 def get_all_products_handler():
     
