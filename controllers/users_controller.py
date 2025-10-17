@@ -2,10 +2,11 @@
 from flask import jsonify, request, Response
 
 from repositories.users_sqlite_repository import UsersSQLiteRepository
+from repositories.factories import create_users_repository
 
 def get_all_users_handler():
     try:
-        repo = UsersSQLiteRepository()
+        repo = create_users_repository()
         users = repo.all()
         users_list = []
         for user in users:
@@ -18,7 +19,7 @@ def get_all_users_handler():
 
 def get_user_by_id_handler(user_id):
     try:
-        repo = UsersSQLiteRepository()
+        repo = create_users_repository()
         user = repo.get_by_id(user_id)
         if user is None:
             return jsonify({'error': 'user not found'}), 404
@@ -39,7 +40,7 @@ def add_user_handler():
     """
 
     try:
-        repo = UsersSQLiteRepository()
+        repo = create_users_repository()
         request_data = request.get_json()
         username = request_data.get('username', None)
         first_name = request_data.get('first_name', None)
@@ -57,7 +58,7 @@ def add_user_handler():
 
 def update_user_handler(user_id):
     try:
-        repo = UsersSQLiteRepository()
+        repo = create_users_repository()
 
         request_data = request.get_json()
         username = request_data.get('username', None)
@@ -77,7 +78,7 @@ def update_user_handler(user_id):
 
 def remove_user_handler(user_id):
     try:
-        repo = UsersSQLiteRepository()
+        repo = create_users_repository()
         removed = repo.remove_by_id(user_id)
         if not removed:
             return jsonify({'error': 'error removing user'}), 400
