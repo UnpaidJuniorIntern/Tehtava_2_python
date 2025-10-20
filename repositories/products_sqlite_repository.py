@@ -20,8 +20,7 @@ class ProductsSQLiteRepository:
         if self.connection is not None:
             self.connection.close()
 
-    @staticmethod
-    def get_all():
+    def all(self):
             with sqlite3.connect("tuntiharjoitus1.db") as con:
                 cur = con.cursor()
                 cur.execute("SELECT * FROM products")
